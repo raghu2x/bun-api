@@ -23,7 +23,7 @@ const _fileType = [
 ]
 
 const fileFilter = (type: string = 'default') => {
-  return (req: Request, file: Express.Multer.File, cb: FileFilterCallback) => {
+  return (req: Request, file: File, cb: FileFilterCallback) => {
     if (type === 'default') {
       return cb(null, true)
     } else {

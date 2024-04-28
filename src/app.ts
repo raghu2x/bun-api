@@ -13,7 +13,7 @@ app.use(apiLimiter)
 
 app.use(
   bodyLimit({
-    maxSize: 1 * 1024
+    maxSize: 5 * 1024 * 1024 //1mb
   })
 )
 
@@ -24,11 +24,6 @@ app.use(
   })
 )
 
-app.get('/', c => {
-  return c.json({ message: 'Hello Hono!' })
-})
-
 app.route('/', router)
-// app.notFound(SendEndpointNotFoundResponse);
 
 export default app
