@@ -1,4 +1,9 @@
 {
+  "name": "bun-api",
+  "version": "1.0.0",
+  "description": "bun.js app for creating rest api",
+  "author": "Raghvendera <raghvendraa.dev@gmail.com>",
+  "license": "MIT",
   "scripts": {
     "dev": "bun run --hot src/index.ts"
   },
