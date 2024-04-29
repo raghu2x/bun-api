@@ -22,7 +22,7 @@ const userLogin = async (userData: LoginData, model): Promise<any> => {
     throw new AppError(httpStatus.UNAUTHORIZED, 'userId or password is wrong.')
   }
 
-  const { loginDetail, ...responseUser } = user.toObject()
+  const { loginDetail, ...responseUser } = user.toJSON()
 
   const jwtOptions: SignOptions = {
     expiresIn: remember === true ? '36h' : process.env.JWT_TOKEN_EXPIRY

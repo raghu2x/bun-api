@@ -38,7 +38,7 @@ const createAccount: CustomRequestHandler = async c => {
 
     // 3. create user
     const createdUser = await model.create(userRegData)
-    const { password: userPassword, ...responseUser } = createdUser.toObject()
+    const { password: userPassword, ...responseUser } = createdUser.toJSON()
 
     // send verification email
     void sendVerificationEmail('master_database', userRegData.email)

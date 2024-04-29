@@ -1,4 +1,4 @@
-import auth from '@/server/controllers/coreController/authController/verifyToken'
+// import auth from '@/server/controllers/coreController/authController/verifyToken'
 import routes from './routes'
 import authRouter from './authRouter'
 import crudRouter from '@/server/router/apiRouter'
@@ -18,13 +18,10 @@ router.get('/', c => {
 })
 
 // routes
-router.route('/', routes)
-router.route('/api/auth', authRouter)
-router.route('', fileUploadRouter)
-
-router.use('/api/*', auth)
-
 router.route('/api', crudRouter)
+router.route('/api/admin', routes)
+router.route('/api/auth', authRouter)
+router.route('/api', fileUploadRouter)
 
 router.route('', coreRouter.corePublicRoute)
 router.all('*', SendEndpointNotFoundResponse)

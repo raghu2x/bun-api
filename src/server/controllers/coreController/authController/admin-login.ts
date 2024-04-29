@@ -19,7 +19,7 @@ const adminLogin = async (userData: LoginData) => {
   // 3. check email verification
   if (!user.verified) throw new AppError(httpStatus.UNAUTHORIZED, 'Account is not verified')
 
-  const { password: userPassword, ...responseUser } = user.toObject()
+  const { password: userPassword, ...responseUser } = user.toJSON()
 
   const jwtOptions = {
     expiresIn: remember === true ? '36h' : process.env.JWT_TOKEN_EXPIRY

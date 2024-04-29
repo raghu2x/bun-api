@@ -3,6 +3,7 @@ import adminController from '@/server/controllers/coreController/adminController
 
 import { createAccountLimiter } from '@/utils/rateLimiter'
 import { Hono } from 'hono'
+import { checkInstitute } from './routes'
 
 const router = new Hono()
 
@@ -11,7 +12,7 @@ const router = new Hono()
 router.post('/register', createAccountLimiter, adminController.createAccount)
 router.post('/verify-contact', adminController.verifyAccount)
 
-router.post('/login', authController.loginAccount)
+router.post('/login', checkInstitute, authController.loginAccount)
 router.post('/forgot-password', authController.forgotPassword)
 router.post('/reset-password', authController.resetPassword)
 

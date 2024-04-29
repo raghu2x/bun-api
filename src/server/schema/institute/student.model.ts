@@ -8,35 +8,41 @@ export interface LoginDetail {
   password: string
 }
 
-const studentSchema = new Schema({
-  firstName: {
-    type: String,
-    required: true
-  },
-  lastName: {
-    type: String,
-    required: true
-  },
-  batch: {
-    type: String
-  },
-  status: {
-    type: String,
-    // default: enums.BookStatus.ACTIVE,
-    enum: Object.values(enums.BookStatus),
-    message: `Invalid status. Allowed values are ${Object.values(enums.BookStatus).join(', ')}.`
-  },
-  loginDetail: {
-    id: {
+const studentSchema = new Schema(
+  {
+    firstName: {
       type: String,
       required: true
     },
-    password: {
+    lastName: {
       type: String,
       required: true
+    },
+    batch: {
+      type: String
+    },
+    status: {
+      type: String,
+      // default: enums.BookStatus.ACTIVE,
+      enum: Object.values(enums.BookStatus),
+      message: `Invalid status. Allowed values are ${Object.values(enums.BookStatus).join(', ')}.`
+    },
+    loginDetail: {
+      id: {
+        type: String,
+        required: true
+      },
+      password: {
+        type: String,
+        required: true
+      }
     }
+  },
+  {
+    timestamps: true,
+    versionKey: false
   }
-})
+)
 
 studentSchema.pre('validate', function (next) {
   // 'this' refers to the current document being saved

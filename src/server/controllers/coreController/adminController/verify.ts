@@ -37,7 +37,7 @@ const verifyAccount: CustomRequestHandler = async (c: Context) => {
       throw new AppError(httpStatus.NOT_FOUND, `User not found with email: ${email}`)
     }
 
-    const { password: userPassword, ...responseUser } = user.toObject()
+    const { password: userPassword, ...responseUser } = user.toJSON()
 
     return sendSuccessResponse(c, responseUser, httpStatus.OK, 'Account verified successfully.')
   } catch (error) {

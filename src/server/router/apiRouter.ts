@@ -1,6 +1,7 @@
 import models from '@/server/schema'
 import controller from '@/server/controllers/crudController'
 import { Hono } from 'hono'
+import verifyToken from '../controllers/coreController/authController/verifyToken'
 
 const router = new Hono()
 /* eslint-disable */
@@ -9,23 +10,28 @@ Object.keys(models).forEach(modelName => {
   const modelGetter = models[modelName].createModel
   console.log('_____❤️  auto crud endpoint:', `${modelName}s`)
 
+  const endpoint = `/${modelName}s`
+
+  // added route authentication
+  router.use(`${endpoint}/*`, verifyToken)
+
   // Get all documents for this model
-  router.get(`/${modelName}s`, controller.getAllRecords(modelGetter))
+  router.get(endpoint, controller.getAllRecords(modelGetter))
 
   // Get a single document by ID
-  router.get(`/${modelName}s/:id`, controller.getRecordById(modelGetter))
+  router.get(`${endpoint}/:id`, controller.getRecordById(modelGetter))
 
   // Create a new document
-  router.post(`/${modelName}s`, controller.createRecord(modelGetter))
+  router.post(endpoint, controller.createRecord(modelGetter))
 
   // Update an existing document by ID
-  router.put(`/${modelName}s/:id`, controller.updateRecordById(modelGetter))
+  router.put(`${endpoint}/:id`, controller.updateRecordById(modelGetter))
 
   // Delete many document by ID
-  router.delete(`/${modelName}s`, controller.deleteManyRecords(modelGetter))
+  router.delete(endpoint, controller.deleteManyRecords(modelGetter))
 
   // Delete a document by ID
-  router.delete(`/${modelName}s/:id`, controller.deleteRecordById(modelGetter))
+  router.delete(`${endpoint}/:id`, controller.deleteRecordById(modelGetter))
 })
 
 export default router

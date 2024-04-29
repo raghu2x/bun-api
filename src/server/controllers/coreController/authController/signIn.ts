@@ -66,7 +66,8 @@ export const loginAccount: CustomRequestHandler = async c => {
       domain: hostname
     })
 
-    return SendLoginResponse(c, user)
+    const institute = c.get('institute')
+    return SendLoginResponse(c, { user, institute })
   } catch (error: any) {
     return sendErrorResponse(c, error.statusCode, error.message)
   }

@@ -6,7 +6,7 @@ import { unlink } from 'node:fs/promises'
 
 const fileUploadRouter = new Hono()
 
-fileUploadRouter.post('/api/upload-file', async ctx => {
+fileUploadRouter.post('/upload-file', async ctx => {
   const body = await ctx.req.parseBody()
 
   const file = body['file']
@@ -23,7 +23,7 @@ fileUploadRouter.post('/api/upload-file', async ctx => {
   return sendErrorResponse(ctx, httpStatus.BAD_REQUEST, 'File is not a valid blob')
 })
 
-fileUploadRouter.delete('/api/delete-files', async c => {
+fileUploadRouter.delete('/delete-files', async c => {
   try {
     const filePaths = c.req.queries('filePaths')
 

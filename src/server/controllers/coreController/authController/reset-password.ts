@@ -36,7 +36,7 @@ const resetPassword: CustomRequestHandler = async (ctx: Context) => {
       throw new AppError(httpStatus.NOT_FOUND, `User not found with email: ${payload.email}`)
     }
 
-    const { password: userPassword, ...responseUser } = user.toObject()
+    const { password: userPassword, ...responseUser } = user.toJSON()
 
     return sendSuccessResponse(ctx, responseUser, httpStatus.OK, 'Password reset successfully.')
   } catch (error) {

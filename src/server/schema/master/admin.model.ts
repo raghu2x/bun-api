@@ -1,9 +1,8 @@
-import { InferSchemaType, Model, Schema } from 'mongoose'
+import { InferSchemaType, Schema } from 'mongoose'
 import { validate } from '@/utils/validator'
 import AppError from '@/utils/appError'
 import httpStatus from 'http-status'
 import { useDB } from '@/database/connection'
-import { Document } from 'mongodb'
 
 const adminUserSchema = new Schema(
   {
