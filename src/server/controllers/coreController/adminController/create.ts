@@ -1,19 +1,16 @@
 import { type UserRegistrationData } from '@/types/authentication'
-import { SendAccountCreatedResponse, sendErrorResponse } from '@/utils/apiResponse'
+import { SendAccountCreatedResponse, handleErrors, sendErrorResponse } from '@/utils/apiResponse'
 import userValidation from '@/server/validations/user.validation'
 import httpStatus from 'http-status'
 import AdminModel from '@/server/schema/master/admin.model'
 import { type CustomRequestHandler } from '@/types/common'
 import { encrypt } from '@/utils/authUtils'
 import { saveOTP } from '@/server/services/otpService'
-import OtpModel from '@/server/schema/otp'
 import sendMail from '@/server/services/sendEmail'
 
 const sendVerificationEmail = async (tenantId: string, email: string): Promise<void> => {
   try {
-    const otpModel = OtpModel.createModel(tenantId)
-
-    const { otp } = await saveOTP(otpModel, { email })
+    const { otp } = await saveOTP(tenantId, { email })
     // @ts-expect-error - otp key issue
     await sendMail({ to: email, otp })
 
@@ -47,7 +44,7 @@ const createAccount: CustomRequestHandler = async c => {
     if (error.code === 11000) {
       return sendErrorResponse(c, httpStatus.CONFLICT, "'Email' already exists")
     }
-    return sendErrorResponse(c, error.statusCode, error.message)
+    return handleErrors(c, error)
   }
 }
 

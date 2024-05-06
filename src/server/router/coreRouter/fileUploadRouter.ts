@@ -1,4 +1,4 @@
-import { sendErrorResponse, sendSuccessResponse } from '@/utils/apiResponse'
+import { handleErrors, sendErrorResponse, sendSuccessResponse } from '@/utils/apiResponse'
 import { uploadFile } from '@/utils/uploader/uploadFile'
 import { Hono } from 'hono'
 import httpStatus from 'http-status'
@@ -35,7 +35,7 @@ fileUploadRouter.delete('/delete-files', async c => {
 
     return sendSuccessResponse(c, null, httpStatus.OK, 'Files removed successfully')
   } catch (error) {
-    return sendErrorResponse(c, httpStatus.BAD_REQUEST, error.message)
+    return handleErrors(c, error)
   }
 })
 

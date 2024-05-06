@@ -1,6 +1,7 @@
 import { type Context } from 'hono'
 import { type StatusCode, type SuccessStatusCode } from 'hono/utils/http-status'
 import httpStatus from 'http-status'
+import AppError from './appError'
 
 interface Payload {
   success: boolean
@@ -79,4 +80,14 @@ export const SendLoginResponse = <S extends Context, T = any>(c: S, data: T): Re
     message: 'Login successfull',
     data
   })
+}
+
+export const handleErrors = <S extends Context>(c: S, error: unknown) => {
+  if (error instanceof AppError) {
+    return sendErrorResponse(c, error.statusCode, error.message)
+  }
+
+  // @ts-expect-error - just ignore it
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+  return sendErrorResponse(c, error?.statusCode ?? httpStatus.INTERNAL_SERVER_ERROR, error?.message)
 }

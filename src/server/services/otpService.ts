@@ -1,21 +1,18 @@
 import AppError from '@/utils/appError'
 import { generateOTP } from '@/utils/authUtils'
 import httpStatus from 'http-status'
+import OtpModel from '@/server/schema/otp'
 
 interface OtpData {
   email: string
   otp?: number
 }
 
-const checkIfOtpExists = async (otpModel, email: string): Promise<OtpData | false> => {
-  const otpExist = await otpModel.findOne({ email })
-  if (otpExist != null) return otpExist
-  return false
-}
+const saveOTP = async (tenantId: string, { email }: OtpData) => {
+  const otpModel = OtpModel.createModel(tenantId)
 
-const saveOTP = async (otpModel, { email }: OtpData): Promise<OtpData> => {
-  const existingOtp = await checkIfOtpExists(otpModel, email)
-  if (existingOtp !== false) return existingOtp
+  const existingOtp = await otpModel.findOne({ email })
+  if (existingOtp !== null) return existingOtp
 
   const otp = generateOTP()
 
@@ -24,9 +21,11 @@ const saveOTP = async (otpModel, { email }: OtpData): Promise<OtpData> => {
   return newOtp
 }
 
-const verifyOTP = async (model, { email, otp }: OtpData): Promise<boolean> => {
-  const existingOtp = await checkIfOtpExists(model, email)
-  if (existingOtp === false) throw new AppError(httpStatus.BAD_REQUEST, 'OTP expired.')
+const verifyOTP = async (tenantId: string, { email, otp }: OtpData): Promise<boolean> => {
+  const otpModel = OtpModel.createModel(tenantId)
+
+  const existingOtp = await otpModel.findOne({ email })
+  if (existingOtp === null) throw new AppError(httpStatus.BAD_REQUEST, 'OTP expired.')
 
   if (existingOtp.otp !== otp) {
     throw new AppError(httpStatus.BAD_REQUEST, 'Please enter correct OTP.')

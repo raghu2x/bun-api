@@ -1,5 +1,5 @@
-import { type Model } from 'mongoose'
-import { sendErrorResponse, sendSuccessResponse } from '@/utils/apiResponse'
+import { type Model, type Document } from 'mongoose'
+import { handleErrors, sendSuccessResponse } from '@/utils/apiResponse'
 import httpStatus from 'http-status'
 import { type CustomRequestHandler } from '@/types/common'
 import { getAll, getOne } from './getRecords'
@@ -7,12 +7,12 @@ import { create } from './create'
 import { updateOne } from './update'
 import { deleteMany, deleteOne } from './remove'
 
-type FunctionI = (modelName: (instituteName: string) => Model<any>) => CustomRequestHandler
+type FunctionI = (modelName: (instituteName: string) => Model<Document>) => CustomRequestHandler
 
 const getAllRecords: FunctionI = getModel => {
-  return async (c, next) => {
+  return async (c, _next) => {
     try {
-      const institutionName = c.get('institutionName')
+      const institutionName: string = c.get('institutionName')
 
       const model = getModel(institutionName)
 
@@ -21,13 +21,13 @@ const getAllRecords: FunctionI = getModel => {
 
       return sendSuccessResponse(c, data, httpStatus.OK)
     } catch (error: any) {
-      return sendErrorResponse(c, error.statusCode, error.message)
+      return handleErrors(c, error)
     }
   }
 }
 
 const getRecordById: FunctionI = getModel => {
-  return async (c, next) => {
+  return async (c, _next) => {
     const { id } = c.req.param()
     const institutionName: string = c.get('institutionName')
 
@@ -37,16 +37,16 @@ const getRecordById: FunctionI = getModel => {
       const data: Record<string, any> = await getOne(model, id)
       return sendSuccessResponse(c, data, httpStatus.OK)
     } catch (error: any) {
-      return sendErrorResponse(c, error.statusCode, error.message)
+      return handleErrors(c, error)
     }
   }
 }
 
 const createRecord: FunctionI = getModel => {
-  return async (c, next) => {
+  return async (c, _next) => {
     try {
       const body = await c.req.json()
-      const institutionName = c.get('institutionName')
+      const institutionName: string = c.get('institutionName')
       const model = getModel(institutionName)
 
       // 1. check if validations are defined
@@ -59,16 +59,16 @@ const createRecord: FunctionI = getModel => {
       return sendSuccessResponse(c, data, httpStatus.CREATED, 'New record created')
     } catch (error: any) {
       console.error('errror')
-      return sendErrorResponse(c, error.statusCode, error.message)
+      return handleErrors(c, error)
     }
   }
 }
 
 const updateRecordById: FunctionI = getModel => {
-  return async (c, next) => {
+  return async (c, _next) => {
     const { id } = c.req.param()
-    const record = await c.req.json()
-    const institutionName = c.get('institutionName')
+    const record: Record<string, any> = await c.req.json()
+    const institutionName: string = c.get('institutionName')
 
     const model = getModel(institutionName)
 
@@ -77,15 +77,15 @@ const updateRecordById: FunctionI = getModel => {
 
       return sendSuccessResponse(c, data, httpStatus.OK, 'Record updated successfully')
     } catch (error: any) {
-      return sendErrorResponse(c, error.statusCode, error.message)
+      return handleErrors(c, error)
     }
   }
 }
 
 const deleteRecordById: FunctionI = getModel => {
-  return async (c, next) => {
+  return async (c, _next) => {
     const { id } = c.req.param()
-    const institutionName = c.get('institutionName')
+    const institutionName: string = c.get('institutionName')
 
     const model = getModel(institutionName)
 
@@ -93,15 +93,15 @@ const deleteRecordById: FunctionI = getModel => {
       const data = await deleteOne(model, id)
       return sendSuccessResponse(c, data, httpStatus.OK, 'Record Deleted successfully')
     } catch (error: any) {
-      return sendErrorResponse(c, error.statusCode, error.message)
+      return handleErrors(c, error)
     }
   }
 }
 
 const deleteManyRecords: FunctionI = getModel => {
-  return async (c, next) => {
+  return async (c, _next) => {
     const { ids }: { ids: string[] } = await c.req.json()
-    const institutionName = c.get('institutionName')
+    const institutionName: string = c.get('institutionName')
 
     const model = getModel(institutionName)
 
@@ -110,7 +110,7 @@ const deleteManyRecords: FunctionI = getModel => {
 
       return sendSuccessResponse(c, data, httpStatus.OK, `Deleted ${data.deletedCount} records`)
     } catch (error: any) {
-      return sendErrorResponse(c, error.statusCode, error.message)
+      return handleErrors(c, error)
     }
   }
 }

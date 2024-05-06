@@ -1,4 +1,4 @@
-import { sendErrorResponse, sendSuccessResponse } from '@/utils/apiResponse'
+import { handleErrors, sendSuccessResponse } from '@/utils/apiResponse'
 import AppError from '@/utils/appError'
 import { Hono, type Next, type Context } from 'hono'
 import httpStatus from 'http-status'
@@ -20,7 +20,7 @@ export const checkInstitute = async (c: Context, next: Next) => {
     c.set('institute', institute)
     await next()
   } catch (error) {
-    return sendErrorResponse(c, error.statusCode, error.message)
+    return handleErrors(c, error)
   }
 }
 
@@ -38,7 +38,7 @@ router.post('/create-institute', async c => {
     const data = await model.create(body)
     return sendSuccessResponse(c, data, httpStatus.CREATED, 'Tenant created!')
   } catch (error: any) {
-    return sendErrorResponse(c, error.statusCode, error.message)
+    return handleErrors(c, error)
   }
 })
 

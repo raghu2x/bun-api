@@ -1,4 +1,4 @@
-import { Schema } from 'mongoose'
+import { Schema, type InferSchemaType } from 'mongoose'
 import { enums } from '@/data'
 import { generateTemporaryCredentials } from '@/utils/generateCredentials'
 import { useDB } from '@/database/connection'
@@ -53,6 +53,8 @@ studentSchema.pre('validate', function (next) {
 
   next()
 })
+
+export type IStudent = InferSchemaType<typeof studentSchema>
 
 const createModel = (tenantId: string) => {
   const conn = useDB(tenantId)

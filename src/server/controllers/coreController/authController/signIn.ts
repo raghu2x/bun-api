@@ -1,5 +1,5 @@
 import userValidation from '@/server/validations/user.validation'
-import { SendLoginResponse, sendErrorResponse } from '@/utils/apiResponse'
+import { SendLoginResponse, handleErrors } from '@/utils/apiResponse'
 import adminLogin from './admin-login'
 import userLogin from './user-login'
 import { env } from '@/utils/env'
@@ -68,7 +68,7 @@ export const loginAccount: CustomRequestHandler = async c => {
 
     const institute = c.get('institute')
     return SendLoginResponse(c, { user, institute })
-  } catch (error: any) {
-    return sendErrorResponse(c, error.statusCode, error.message)
+  } catch (error) {
+    return handleErrors(c, error)
   }
 }

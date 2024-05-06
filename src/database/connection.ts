@@ -1,5 +1,5 @@
-import { env, envOrFail } from '@/utils/env'
-import mongoose, { type Connection, type ConnectOptions, Schema } from 'mongoose'
+import { envOrFail } from '@/utils/env'
+import mongoose, { type Connection, type ConnectOptions } from 'mongoose'
 
 mongoose.set({
   id: true,
@@ -7,8 +7,8 @@ mongoose.set({
   // strictPopulate: false,
   toJSON: {
     virtuals: true,
-    transform: function (doc, ret) {
-      delete ret._id
+    transform: function (_doc, ret) {
+      delete ret['_id']
     }
   }
 })
@@ -54,17 +54,4 @@ export const useMasterDB = (): Connection => {
 export const useDB = (dbName: string): Connection => {
   const mongoConnection = connectToDatabase(dbName)
   return mongoConnection
-}
-
-// export const createModel = (db: Connection, modelName: string, modelSchema): Model<Document> => {
-//   return db.model(modelName, modelSchema) as Model<Document>
-// }
-
-export const getModelByTenant = <T = any>(
-  tenantId: string,
-  modelName: string,
-  modelSchema: Schema
-) => {
-  const conn = connectToDatabase(tenantId)
-  return conn.model(modelName, modelSchema)
 }
