@@ -1,9 +1,8 @@
 import { sendErrorResponse, sendSuccessResponse } from '@/utils/apiResponse'
 import AppError from '@/utils/appError'
-import { Hono, Next } from 'hono'
+import { Hono, type Next, type Context } from 'hono'
 import httpStatus from 'http-status'
 import instituteModel from '../schema/master/institute.model'
-import { Context } from 'hono'
 
 const router = new Hono()
 

@@ -17,7 +17,8 @@ module.exports = {
     '@typescript-eslint/space-before-function-paren': 'off',
     '@typescript-eslint/non-nullable-type-assertion-style': 'off',
     '@typescript-eslint/no-unused-vars': 'warn',
-    '@typescript-eslint/no-misused-promises': 'off',
+    '@typescript-eslint/strict-boolean-expressions': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'off',
 
     // import rules
     'import/first': 'error',

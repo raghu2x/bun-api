@@ -92,6 +92,10 @@ export const uploadFile = async (
 
     throw Error('Invalid File!')
   } catch (error) {
-    return { error: true, message: error.message, file: null }
+    return {
+      error: true,
+      message: error instanceof Error ? error.message : 'Can not upload file',
+      file: null
+    }
   }
 }

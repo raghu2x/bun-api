@@ -1,6 +1,6 @@
-import { Context, Next } from 'hono'
+import { type Context, type Next } from 'hono'
 import { type Connection } from 'mongoose'
-import { UserTypes } from './authentication'
+import { type UserTypes } from './authentication'
 
 /* =============== Express ================= */
 export interface AuthenticatedUser {

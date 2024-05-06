@@ -1,5 +1,5 @@
-import { Context } from 'hono'
-import { StatusCode, SuccessStatusCode } from 'hono/utils/http-status'
+import { type Context } from 'hono'
+import { type StatusCode, type SuccessStatusCode } from 'hono/utils/http-status'
 import httpStatus from 'http-status'
 
 interface Payload {
@@ -46,7 +46,7 @@ export const sendErrorResponse = <S extends Context>(
   return c.json(payload, statusCode)
 }
 
-export const SendEndpointNotFoundResponse = <S extends Context, T = any>(c: S): Response => {
+export const SendEndpointNotFoundResponse = <S extends Context>(c: S): Response => {
   const payload: Payload = {
     success: false,
     timestamp: new Date(),

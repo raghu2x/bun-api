@@ -1,4 +1,4 @@
-import { InferSchemaType, Schema } from 'mongoose'
+import { type InferSchemaType, Schema } from 'mongoose'
 import { validate } from '@/utils/validator'
 import { generateTemporaryCredentials } from '@/utils/generateCredentials'
 import { useDB } from '@/database/connection'
@@ -75,7 +75,7 @@ userSchema.pre('validate', function (next) {
 })
 
 export class UserModel {
-  private static userSchema = userSchema
+  private static readonly userSchema = userSchema
 
   public static createModel = (tenantId: string) => {
     const conn = useDB(tenantId)

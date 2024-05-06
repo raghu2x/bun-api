@@ -2,14 +2,12 @@ import { type UserRegistrationData } from '@/types/authentication'
 import { SendAccountCreatedResponse, sendErrorResponse } from '@/utils/apiResponse'
 import userValidation from '@/server/validations/user.validation'
 import httpStatus from 'http-status'
-import AdminModel, { type Admin } from '@/server/schema/master/admin.model'
+import AdminModel from '@/server/schema/master/admin.model'
 import { type CustomRequestHandler } from '@/types/common'
 import { encrypt } from '@/utils/authUtils'
 import { saveOTP } from '@/server/services/otpService'
 import OtpModel from '@/server/schema/otp'
 import sendMail from '@/server/services/sendEmail'
-import { type Connection } from 'mongoose'
-import { useDB } from '@/database/connection'
 
 const sendVerificationEmail = async (tenantId: string, email: string): Promise<void> => {
   try {

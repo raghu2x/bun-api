@@ -1,7 +1,7 @@
-import { type Model, type Document, type Schema } from 'mongoose'
+import { type Model } from 'mongoose'
 import { sendErrorResponse, sendSuccessResponse } from '@/utils/apiResponse'
 import httpStatus from 'http-status'
-import { type CustomRequestHandler, type AuthenticatedUser } from '@/types/common'
+import { type CustomRequestHandler } from '@/types/common'
 import { getAll, getOne } from './getRecords'
 import { create } from './create'
 import { updateOne } from './update'
@@ -29,7 +29,7 @@ const getAllRecords: FunctionI = getModel => {
 const getRecordById: FunctionI = getModel => {
   return async (c, next) => {
     const { id } = c.req.param()
-    const institutionName = c.get('institutionName')
+    const institutionName: string = c.get('institutionName')
 
     const model = getModel(institutionName)
 

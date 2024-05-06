@@ -1,8 +1,8 @@
 import { sendErrorResponse } from '@/utils/apiResponse'
 import httpStatus from 'http-status'
 import { env } from '@/utils/env'
-import { type CustomRequestHandler, type AuthenticatedUser } from '@/types/common'
-import { Context, Next } from 'hono'
+import { type AuthenticatedUser } from '@/types/common'
+import { type Context, type Next } from 'hono'
 import { getCookie } from 'hono/cookie'
 import { verifyJwtToken } from '@/utils/authUtils'
 

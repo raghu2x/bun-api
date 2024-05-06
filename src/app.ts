@@ -5,6 +5,7 @@ import { logger } from 'hono/logger'
 import { secureHeaders } from 'hono/secure-headers'
 import { apiLimiter } from './utils/rateLimiter'
 import router from './server/router'
+
 const app = new Hono()
 
 app.use(logger())
@@ -13,7 +14,7 @@ app.use(apiLimiter)
 
 app.use(
   bodyLimit({
-    maxSize: 5 * 1024 * 1024 //1mb
+    maxSize: 5 * 1024 * 1024 // 5mb
   })
 )
 

@@ -1,8 +1,8 @@
 import * as crypto from 'crypto'
 import * as jwt from 'jsonwebtoken' // use for generating auth token
 // import * as bcrypt from 'node:bcrypt'
-import { sign, verify } from 'hono/jwt'
-import { JWTPayload } from 'hono/utils/jwt/types'
+// import { sign, verify } from 'hono/jwt'
+import { type JWTPayload } from 'hono/utils/jwt/types'
 
 const generateOTP = (otpLength: number = 6): number => {
   let OTP: number = 0
@@ -68,7 +68,7 @@ const verifyJwtToken = <T extends JWTPayload>(token: string): T => {
  * @returns {Promise<string>} - A promise that resolves to the encrypted value
  */
 const encrypt = async (plaintext: string): Promise<string> => {
-  return Bun.password.hash(plaintext)
+  return await Bun.password.hash(plaintext)
   // return encryptedValue;
 }
 
@@ -79,7 +79,7 @@ const encrypt = async (plaintext: string): Promise<string> => {
  * @returns {Promise<boolean>} - A promise that resolves to a boolean indicating whether the values match
  */
 const compare = async (plaintext: string, hash: string): Promise<boolean> => {
-  return Bun.password.verify(plaintext, hash)
+  return await Bun.password.verify(plaintext, hash)
   // return isSame;
 }
 

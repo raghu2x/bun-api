@@ -1,7 +1,6 @@
 import { sendErrorResponse } from '@/utils/apiResponse'
 import type AppError from '@/utils/appError'
-import { Context } from 'hono'
-import { ClientErrorStatusCode, ServerErrorStatusCode } from 'hono/utils/http-status'
+import { type Context } from 'hono'
 import httpStatus from 'http-status'
 
 const handleErrors = (err: AppError, c: Context): Response => {

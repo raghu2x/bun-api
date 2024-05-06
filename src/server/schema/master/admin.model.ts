@@ -1,4 +1,4 @@
-import { InferSchemaType, Schema } from 'mongoose'
+import { type InferSchemaType, Schema } from 'mongoose'
 import { validate } from '@/utils/validator'
 import AppError from '@/utils/appError'
 import httpStatus from 'http-status'

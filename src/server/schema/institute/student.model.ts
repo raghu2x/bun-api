@@ -1,4 +1,4 @@
-import { Schema, type Document } from 'mongoose'
+import { Schema } from 'mongoose'
 import { enums } from '@/data'
 import { generateTemporaryCredentials } from '@/utils/generateCredentials'
 import { useDB } from '@/database/connection'

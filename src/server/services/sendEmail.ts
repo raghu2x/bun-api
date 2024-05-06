@@ -1,9 +1,5 @@
 import { MAIL_SETTINGS, type MailSetting } from '@/config'
-import nodemailer, {
-  type Transporter,
-  type SendMailOptions,
-  type SentMessageInfo
-} from 'nodemailer'
+import nodemailer, { type SendMailOptions, type SentMessageInfo } from 'nodemailer'
 
 import { compileTemplate } from './templateParser'
 
@@ -32,7 +28,7 @@ const sendMail = async (params: MailParams): Promise<SentMessageInfo> => {
       subject: params.subject ?? 'Hello ✔', // Use the provided subject or a default value
       html
     }
-    const info: Transporter<MailSetting> = await transporter.sendMail(mailOptions)
+    const info = await transporter.sendMail(mailOptions)
     // console.log('_______________email send', info)
     return info
   } catch (error) {

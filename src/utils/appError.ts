@@ -1,4 +1,4 @@
-import { ClientErrorStatusCode, ServerErrorStatusCode } from "hono/utils/http-status"
+import { type ClientErrorStatusCode, type ServerErrorStatusCode } from 'hono/utils/http-status'
 
 class AppError extends Error {
   public statusCode: ServerErrorStatusCode | ClientErrorStatusCode

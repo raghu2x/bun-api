@@ -1,4 +1,4 @@
-import { Schema, InferSchemaType } from 'mongoose'
+import { Schema, type InferSchemaType } from 'mongoose'
 import { enums } from '@/data'
 import httpStatus from 'http-status'
 import AppError from '@/utils/appError'
@@ -26,7 +26,7 @@ const instituteSchema = new Schema(
 
 export type Institute = InferSchemaType<typeof instituteSchema>
 
-instituteSchema.statics.get = async function (email: string): Promise<Institute | null> {
+instituteSchema.statics['get'] = async function (email: string): Promise<Institute | null> {
   const institute: Institute | null = await this.findOne({ email }).select('+password').exec()
 
   if (institute !== null) {
