@@ -7,6 +7,7 @@ const router = new Hono()
 /* eslint-disable */
 // Create dynamic routes for each Mongoose model
 Object.keys(models).forEach(modelName => {
+  // @ts-expect-error - just ignore it
   const modelGetter = models[modelName].createModel
   console.log('_____❤️  auto crud endpoint:', `${modelName}s`)
 

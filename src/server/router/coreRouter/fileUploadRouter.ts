@@ -12,7 +12,7 @@ fileUploadRouter.post('/upload-file', async ctx => {
   const file = body['file']
 
   if (file instanceof File) {
-    const uploadedFile = await uploadFile(file, { accepts: 'image' })
+    const uploadedFile = await uploadFile(file, { accepts: 'pdf' })
 
     if (uploadedFile.error) {
       return sendErrorResponse(ctx, httpStatus.BAD_REQUEST, uploadedFile.message)

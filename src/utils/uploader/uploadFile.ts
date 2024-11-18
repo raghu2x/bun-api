@@ -1,5 +1,6 @@
 import { slugify } from 'transliteration'
 import fileFilter from './upload.utils'
+import path from 'path'
 
 export interface UploadedFile {
   fileName: string
@@ -69,10 +70,10 @@ export const uploadFile = async (
 
       const randomId = Math.random().toString(36).substring(2, 10)
 
-      const _fileName = slugify(file.name)
       const _fileExt = getFileExt(file.name)
+      const _fileName = slugify(path.basename(file.name, `.${_fileExt}`))
 
-      const uploadPath = `/${randomId}_${_fileName}`
+      const uploadPath = `/${_fileName}-${randomId}.${_fileExt}`
       await Bun.write(`${options.baseDir}${uploadPath}`, file)
 
       const uploadedFile: UploadedFile = {
